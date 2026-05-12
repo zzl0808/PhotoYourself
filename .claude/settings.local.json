@@ -1,0 +1,26 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pip install:*)",
+      "Bash(pip index:*)",
+      "Bash(pip search:*)",
+      "Bash(pip --version)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(ls -la /Users/zhuozhongliang/PycharmProjects/PhotoYourself/.venv/lib/python*/site-packages/)",
+      "Bash(find /Users/zhuozhongliang/PycharmProjects/PhotoYourself -name *.jpg -o -name *.jpeg -o -name *.png)",
+      "Bash(ls /Users/zhuozhongliang/PycharmProjects/PhotoYourself/.venv/lib/python*/site-packages/)",
+      "Bash(/Users/zhuozhongliang/PycharmProjects/PhotoYourself/.venv/bin/python3 << 'EOF'\nfrom PIL import Image\nfrom PIL import ExifTags\nimport os\n\n# Create a simple test image\nimg = Image.new\\('RGB', \\(100, 100\\), color='red'\\)\n\n# Add EXIF data\nexif_data = img.getexif\\(\\)\n# Add some common EXIF tags\nexif_data[282] = 72  # XResolution\nexif_data[283] = 72  # YResolution\nexif_data[36867] = \"2024:01:15 10:30:00\"  # DateTimeOriginal\nexif_data[33434] = \\(1, 125\\)  # ExposureTime \\(1/125\\)\nexif_data[33437] = \\(28, 10\\)  # FNumber \\(f/2.8\\)\nexif_data[34855] = 400  # ISOSpeedRatings\nexif_data[37386] = \\(50, 1\\)  # FocalLength \\(50mm\\)\n\noutput_path = \"/Users/zhuozhongliang/PycharmProjects/PhotoYourself/tests/fixtures/test_photo.jpg\"\nimg.save\\(output_path, 'JPEG', exif=exif_data\\)\nprint\\(f\"Created test image at {output_path}\"\\)\nEOF)",
+      "Bash(.venv/bin/python -m pytest tests/test_exif_service.py -v 2>&1)",
+      "Bash(.venv/bin/python -m pytest tests/test_cv_service.py -v)",
+      "Bash(pytest:*)",
+      "Bash(timeout 10 streamlit run app.py --server.headless true)",
+      "WebFetch(domain:platform.minimaxi.com)",
+      "mcp__MiniMax__web_search",
+      "Bash(source /Users/zhuozhongliang/PycharmProjects/PhotoYourself/.venv/bin/activate)",
+      "Bash(ls /System/Library/Fonts/*.ttc /System/Library/Fonts/*.ttf)",
+      "Bash(source .venv/bin/activate)",
+      "Bash(python3 -c \":*)"
+    ]
+  }
+}
