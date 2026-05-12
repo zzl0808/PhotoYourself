@@ -11,7 +11,7 @@ class ExifService:
         "iso": ["EXIF ISOSpeedRatings"],
         "focal_length": ["EXIF FocalLength"],
         "date_taken": ["EXIF DateTimeOriginal"],
-        "camera_model": ["Image Model"],
+        "camera_model": ["Image Model", "EXIF Model"],
     }
 
     def extract(self, image_path: str) -> Dict[str, Optional[str]]:
@@ -23,6 +23,12 @@ class ExifService:
             value = self._find_tag(tags, tag_names)
             result[field] = self._format_value(field, value)
         return result
+
+    def get_all_tags(self, image_path: str) -> Dict:
+        """获取图片所有 EXIF 标签，用于调试"""
+        with open(image_path, "rb") as f:
+            tags = exifread.process_file(f, details=False)
+        return {str(k): str(v) for k, v in tags.items()}
 
     def _find_tag(self, tags: dict, tag_names: list) -> Optional[str]:
         for name in tag_names:
@@ -36,7 +42,7 @@ class ExifService:
         if field == "shutter_speed":
             return self._format_shutter(value)
         if field == "aperture":
-            return f"f/{value}"
+            return self._format_aperture(value)
         if field == "focal_length":
             return self._format_focal_length(value)
         return str(value)
@@ -62,3 +68,13 @@ class ExifService:
         except:
             pass
         return value
+
+    def _format_aperture(self, value: str) -> str:
+        try:
+            if "/" in value:
+                num, denom = value.split("/")
+                f_num = float(num) / float(denom)
+                return f"f/{f_num:.1f}"
+        except:
+            pass
+        return f"f/{value}"
